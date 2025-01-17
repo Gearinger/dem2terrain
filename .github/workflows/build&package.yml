@@ -30,9 +30,14 @@ jobs:
     - name: Package
       run: |
         pkg package.json --targets node18-linux-x64,node18-linux-arm64,node18-win-x64
+        echo "打包完成！"
+        ls -al
         mkdir release/
+        echo "拷贝dem2terrain-linux-arm64"
         mv dem2terrain-linux-arm64 release/
+        echo "拷贝node18-linux-arm64"
         mv node18-linux-arm64 release/
+        echo "拷贝dem2terrain-win-x64.exe"
         mv dem2terrain-win-x64.exe release/
 
     - name: Create Release
