@@ -35,8 +35,10 @@ jobs:
         mkdir release/
         echo "拷贝dem2terrain-linux-arm64"
         mv dem2terrain-linux-arm64 release/
+        
         echo "拷贝node18-linux-arm64"
-        mv node18-linux-arm64 release/
+        mv dem2terrain-linux-x64 release/
+        
         echo "拷贝dem2terrain-win-x64.exe"
         mv dem2terrain-win-x64.exe release/
 
