@@ -5,19 +5,21 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Node.js 16.x
+    - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: 16.x
+        node-version: 18.x
+
+    - name: Install GDAL dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gdal-bin libgdal-dev
 
     - name: Install dependencies
       run: npm install
@@ -25,29 +27,14 @@ jobs:
     - name: Build project
       run: npm run build
 
-    - name: Package for Linux
-      if: runner.os == 'Linux'
-      run: |
-        npm install -g pkg
-        pkg package.json --targets node16-linux-x64
-        mkdir release
-        mv node16-linux-x64 release/
+    - name: Install pkg
+      run: npm install -g pkg
 
-    - name: Package for Windows
-      if: runner.os == 'Windows'
+    - name: Package
       run: |
-        npm install -g pkg
-        pkg package.json --targets node16-win-x64
+        pkg package.json --targets node18-linux-x64
         mkdir release
-        move node16-win-x64 release\
-
-    - name: Package for macOS
-      if: runner.os == 'macOS'
-      run: |
-        npm install -g pkg
-        pkg package.json --targets node16-macos-x64
-        mkdir release
-        mv node16-macos-x64 release/
+        mv node18-linux-x64 release/
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
