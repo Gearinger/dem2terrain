@@ -30,7 +30,10 @@ jobs:
     - name: Package
       run: |
         pkg package.json --targets node18-linux-x64,node18-linux-arm64,node18-win-x64
-        ls
+        mkdir release/
+        mv dem2terrain-linux-arm64 release/
+        mv node18-linux-arm64 release/
+        mv dem2terrain-win-x64.exe release/
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
