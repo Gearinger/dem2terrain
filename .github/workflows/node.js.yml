@@ -1,0 +1,60 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js 16.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.x
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build project
+      run: npm run build
+
+    - name: Package for Linux
+      if: runner.os == 'Linux'
+      run: |
+        npm install -g pkg
+        pkg package.json --targets node16-linux-x64
+        mkdir release
+        mv node16-linux-x64 release/
+
+    - name: Package for Windows
+      if: runner.os == 'Windows'
+      run: |
+        npm install -g pkg
+        pkg package.json --targets node16-win-x64
+        mkdir release
+        move node16-win-x64 release\
+
+    - name: Package for macOS
+      if: runner.os == 'macOS'
+      run: |
+        npm install -g pkg
+        pkg package.json --targets node16-macos-x64
+        mkdir release
+        mv node16-macos-x64 release/
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          release/*
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
