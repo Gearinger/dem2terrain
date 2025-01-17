@@ -29,21 +29,8 @@ jobs:
 
     - name: Package
       run: |
-        pkg package.json --targets node18-linux-x64,node16-linux-arm64,node16-win-x64
-        if [ -d "node16-linux-x64" ]; then
-          mkdir -p release
-          mv node16-linux-x64 release/
-          echo "node16-linux-x64 moved to release directory"
-        else
-          echo "node16-linux-x64 does not exist"
-        fi
-        if [ -d "node18-linux-x64" ]; then
-          mkdir -p release
-          mv node18-linux-x64 release/
-          echo "node18-linux-x64 moved to release directory"
-        else
-          echo "node18-linux-x64 does not exist"
-        fi
+        pkg package.json --targets node18-linux-x64,node18-linux-arm64,node18-win-x64
+        ls
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
