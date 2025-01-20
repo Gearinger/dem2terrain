@@ -41,7 +41,9 @@
   "pkg": {
     "scripts": [
       "src/workfarm/child/index.js",
-      "bin/dem2terrain.js"
+      "bin/dem2terrain.js",
+      "index.js",
+      "src/index.js"
     ],
     "assets": [
       "node_modules/gdal-async/lib/binding/**/*"
