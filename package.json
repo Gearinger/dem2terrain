@@ -46,7 +46,7 @@
       "src/index.js"
     ],
     "assets": [
-      "node_modules/gdal-async/lib/binding/**/*"
+      "node_modules/gdal-async/lib/**/*"
     ]
   }
 }
