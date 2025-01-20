@@ -37,5 +37,14 @@
     "gdal-async": "^3.5.1",
     "http-server": "^14.1.1",
     "single-line-log": "^1.1.2"
+  },
+  "pkg": {
+    "scripts": [
+      "src/workfarm/child/index.js",
+      "bin/dem2terrain.js"
+    ],
+    "assets": [
+      "node_modules/gdal-async/lib/binding/**/*"
+    ]
   }
 }
